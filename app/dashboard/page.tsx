@@ -47,8 +47,14 @@ const shortcuts = [
     primary: false,
   },
   {
-    title: "Maison",
-    description: "Vitrine autoral da Nília Diniz.",
+    title: "Criações autorais",
+    description: "Cadastrar peças, coleções, fotos e vitrine.",
+    href: "/criacoes",
+    primary: false,
+  },
+  {
+    title: "Vitrine Soph & Nick",
+    description: "Ver a página pública das criações.",
     href: "/maison",
     primary: false,
   },
@@ -282,7 +288,7 @@ export default function DashboardPage() {
 
           <div className="rounded-[2rem] border border-[#E6D8C8] bg-white p-5 shadow-sm">
             <p className="text-xs uppercase tracking-[0.25em] text-[#9B5C5F]">
-              Maison Soph & Nick
+              Vitrine Soph & Nick
             </p>
 
             <h2 className="mt-3 break-words text-2xl font-semibold text-[#2E2723] [overflow-wrap:anywhere]">
@@ -290,46 +296,56 @@ export default function DashboardPage() {
             </h2>
 
             <p className="mt-3 break-words text-sm leading-7 text-[#7A6A5D] [overflow-wrap:anywhere]">
-              A vitrine autoral ficará separada da rotina de consertos e
-              atendimentos, valorizando roupas criadas do zero, peças sob
-              encomenda e trabalhos especiais.
+              A vitrine autoral reúne roupas criadas do zero, peças sob
+              encomenda, coleções e trabalhos especiais, separados da rotina de
+              ajustes e atendimentos do ateliê.
             </p>
 
             <div className="mt-5 rounded-3xl border border-dashed border-[#D8C7B1] bg-[#F4EADF] p-4">
               <p className="text-sm font-semibold text-[#2E2723]">
-                Próxima etapa da vitrine
+                Área de criações
               </p>
 
               <p className="mt-2 text-sm leading-6 text-[#7A6A5D]">
-                Depois dos atendimentos, vamos permitir cadastrar criações com
-                foto, descrição, status e autorização para aparecer na vitrine.
+                Cadastre peças autorais, adicione foto de capa, galeria,
+                coleção, descrição, status e escolha o que aparece na vitrine
+                pública.
               </p>
             </div>
 
-            <a
-              href="/maison"
-              className="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-full border border-[#D8C7B1] bg-[#F4EADF] px-5 text-sm font-medium text-[#7A4A4F] transition hover:bg-white"
-            >
-              Ver Maison Soph & Nick
-            </a>
-          </div>
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+              <a
+                href="/criacoes"
+                className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#7D3F46] px-5 text-sm font-medium text-white shadow-sm transition hover:bg-[#6B343B]"
+              >
+                Gerenciar criações
+              </a>
+
+              <a
+                href="/maison"
+                className="inline-flex min-h-12 w-full items-center justify-center rounded-full border border-[#D8C7B1] bg-[#F4EADF] px-5 text-sm font-medium text-[#7A4A4F] transition hover:bg-white"
+              >
+                Ver vitrine
+              </a>
+            </div>
+          </div>  
         </section>
 
         <section className="mt-4 rounded-[2rem] border border-[#E6D8C8] bg-white p-5 shadow-sm">
           <p className="text-xs uppercase tracking-[0.25em] text-[#9B5C5F]">
-            Próximo passo
+            Organização do ateliê
           </p>
 
           <h2 className="mt-3 break-words text-2xl font-semibold text-[#2E2723] [overflow-wrap:anywhere]">
-            Fotos e avarias
+            Atendimentos, fotos e criações em um só lugar
           </h2>
 
           <p className="mt-3 break-words text-sm leading-7 text-[#7A6A5D] [overflow-wrap:anywhere]">
-            A próxima função importante será anexar fotos aos itens do
-            atendimento, separando foto de entrada, foto de avaria, processo e
-            peça pronta.
+            Use o painel para registrar atendimentos, acompanhar pagamentos,
+            guardar fotos das peças, consultar clientes e manter a vitrine
+            autoral atualizada.
           </p>
-        </section>
+        </section>  
       </section>
     </main>
   );
