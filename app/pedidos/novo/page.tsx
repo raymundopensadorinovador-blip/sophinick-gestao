@@ -425,9 +425,9 @@ export default function NovoPedidoPage() {
         </header>
 
         <form
-          onSubmit={createServiceOrder}
-          className="grid gap-4 py-6 lg:grid-cols-[1fr_0.75fr]"
-        >
+  onSubmit={createServiceOrder}
+  className="grid gap-4 py-6 pb-28 lg:grid-cols-[1fr_0.75fr] lg:pb-6"
+>
           <section className="min-w-0 space-y-4">
             <div className="rounded-[2rem] border border-[#E6D8C8] bg-white p-5 shadow-sm">
               <p className="text-xs uppercase tracking-[0.25em] text-[#9B5C5F]">
@@ -821,98 +821,128 @@ export default function NovoPedidoPage() {
           </section>
 
           <aside className="min-w-0 space-y-4">
-            <div className="sticky top-4 rounded-[2rem] border border-[#E6D8C8] bg-white p-5 shadow-sm">
-              <p className="text-xs uppercase tracking-[0.25em] text-[#9B5C5F]">
-                Resumo
+  <div className="sticky top-4 flex max-h-[calc(100vh-2rem)] flex-col overflow-hidden rounded-[2rem] border border-[#E6D8C8] bg-white shadow-sm">
+    <div className="border-b border-[#E6D8C8] p-5">
+      <p className="text-xs uppercase tracking-[0.25em] text-[#9B5C5F]">
+        Resumo
+      </p>
+
+      <h2 className="mt-3 text-2xl font-semibold text-[#2E2723]">
+        Conferência do atendimento
+      </h2>
+    </div>
+
+    <div className="min-h-0 flex-1 space-y-3 overflow-y-auto p-5 pr-3 text-sm leading-6 text-[#7A6A5D]">
+      <div className="rounded-3xl bg-[#F4EADF] p-4">
+        <p className="font-medium text-[#2E2723]">Cliente</p>
+        <p className="mt-1 break-words [overflow-wrap:anywhere]">
+          {selectedCustomer?.name || "Ainda não selecionada"}
+        </p>
+      </div>
+
+      <div className="rounded-3xl bg-[#F4EADF] p-4">
+        <div className="flex items-center justify-between gap-3">
+          <p className="font-medium text-[#2E2723]">Itens</p>
+
+          <span className="rounded-full border border-[#D8C7B1] bg-white px-3 py-1 text-xs text-[#7A6A5D]">
+            {items.length} item(ns)
+          </span>
+        </div>
+
+        <div className="mt-3 max-h-64 space-y-2 overflow-y-auto pr-1">
+          {items.map((item, index) => (
+            <div key={item.local_id} className="rounded-2xl bg-white p-3">
+              <p className="break-words font-medium text-[#2E2723] [overflow-wrap:anywhere]">
+                {index + 1}. {item.clothing_type || "Peça"} ·{" "}
+                {item.service_name || "Serviço"}
               </p>
 
-              <h2 className="mt-3 text-2xl font-semibold text-[#2E2723]">
-                Conferência do atendimento
-              </h2>
-
-              <div className="mt-5 space-y-3 text-sm leading-6 text-[#7A6A5D]">
-                <div className="rounded-3xl bg-[#F4EADF] p-4">
-                  <p className="font-medium text-[#2E2723]">Cliente</p>
-                  <p className="mt-1 break-words [overflow-wrap:anywhere]">
-                    {selectedCustomer?.name || "Ainda não selecionada"}
-                  </p>
-                </div>
-
-                <div className="rounded-3xl bg-[#F4EADF] p-4">
-                  <p className="font-medium text-[#2E2723]">Itens</p>
-                  <div className="mt-2 space-y-2">
-                    {items.map((item, index) => (
-                      <div
-                        key={item.local_id}
-                        className="rounded-2xl bg-white p-3"
-                      >
-                        <p className="break-words font-medium text-[#2E2723] [overflow-wrap:anywhere]">
-                          {index + 1}. {item.clothing_type || "Peça"} ·{" "}
-                          {item.service_name || "Serviço"}
-                        </p>
-                        <p className="mt-1 text-[#7A6A5D]">
-                          {formatCurrency(parseMoney(item.price))}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="rounded-3xl bg-[#F4EADF] p-4">
-                  <p className="font-medium text-[#2E2723]">Total</p>
-                  <p className="mt-1 text-2xl font-semibold text-[#2E2723]">
-                    {formatCurrency(totalAmount)}
-                  </p>
-                </div>
-
-                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                  <div className="rounded-3xl bg-[#F4EADF] p-4">
-                    <p className="font-medium text-[#2E2723]">Sinal</p>
-                    <p className="mt-1">{formatCurrency(depositAmount)}</p>
-                  </div>
-
-                  <div className="rounded-3xl bg-[#F4EADF] p-4">
-                    <p className="font-medium text-[#2E2723]">Pago</p>
-                    <p className="mt-1">{formatCurrency(paidAmount)}</p>
-                  </div>
-
-                  <div className="rounded-3xl bg-[#F4EADF] p-4">
-                    <p className="font-medium text-[#2E2723]">Saldo</p>
-                    <p className="mt-1 text-lg font-semibold text-[#2E2723]">
-                      {formatCurrency(balanceAmount)}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="rounded-3xl bg-[#F4EADF] p-4">
-                  <p className="font-medium text-[#2E2723]">Prazo geral</p>
-                  <p className="mt-1">
-                    {getGeneralDueDate() || "Ainda não informado"}
-                  </p>
-                </div>
-              </div>
-
-              {error ? (
-                <div className="mt-5 rounded-2xl border border-[#E8C7C0] bg-red-50 px-4 py-3 text-sm leading-6 text-[#9A4A3F]">
-                  {error}
-                </div>
-              ) : null}
-
-              {message ? (
-                <div className="mt-5 rounded-2xl border border-[#D8C7B1] bg-[#F4EADF] px-4 py-3 text-sm leading-6 text-[#5F564C]">
-                  {message}
-                </div>
-              ) : null}
-
-              <button
-                type="submit"
-                disabled={saving}
-                className="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#7D3F46] px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-[#6B343B] disabled:cursor-not-allowed disabled:opacity-70"
-              >
-                {saving ? "Salvando atendimento..." : "Criar atendimento"}
-              </button>
+              <p className="mt-1 text-[#7A6A5D]">
+                {formatCurrency(parseMoney(item.price))}
+              </p>
             </div>
-          </aside>
+          ))}
+        </div>
+      </div>
+
+      <div className="rounded-3xl bg-[#F4EADF] p-4">
+        <p className="font-medium text-[#2E2723]">Total</p>
+        <p className="mt-1 text-2xl font-semibold text-[#2E2723]">
+          {formatCurrency(totalAmount)}
+        </p>
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+        <div className="rounded-3xl bg-[#F4EADF] p-4">
+          <p className="font-medium text-[#2E2723]">Sinal</p>
+          <p className="mt-1">{formatCurrency(depositAmount)}</p>
+        </div>
+
+        <div className="rounded-3xl bg-[#F4EADF] p-4">
+          <p className="font-medium text-[#2E2723]">Pago</p>
+          <p className="mt-1">{formatCurrency(paidAmount)}</p>
+        </div>
+
+        <div className="rounded-3xl bg-[#F4EADF] p-4">
+          <p className="font-medium text-[#2E2723]">Saldo</p>
+          <p className="mt-1 text-lg font-semibold text-[#2E2723]">
+            {formatCurrency(balanceAmount)}
+          </p>
+        </div>
+      </div>
+
+      <div className="rounded-3xl bg-[#F4EADF] p-4">
+        <p className="font-medium text-[#2E2723]">Prazo geral</p>
+        <p className="mt-1">{getGeneralDueDate() || "Ainda não informado"}</p>
+      </div>
+
+      {error ? (
+        <div className="rounded-2xl border border-[#E8C7C0] bg-red-50 px-4 py-3 text-sm leading-6 text-[#9A4A3F]">
+          {error}
+        </div>
+      ) : null}
+
+      {message ? (
+        <div className="rounded-2xl border border-[#D8C7B1] bg-[#F4EADF] px-4 py-3 text-sm leading-6 text-[#5F564C]">
+          {message}
+        </div>
+      ) : null}
+    </div>
+
+    <div className="border-t border-[#E6D8C8] bg-white p-5">
+      <button
+        type="submit"
+        disabled={saving}
+        className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#7D3F46] px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-[#6B343B] disabled:cursor-not-allowed disabled:opacity-70"
+      >
+        {saving ? "Salvando atendimento..." : "Criar atendimento"}
+      </button>
+    </div>
+  </div>
+</aside>  
+<div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#E6D8C8] bg-white/95 px-4 py-3 shadow-[0_-8px_24px_rgba(46,39,35,0.12)] backdrop-blur lg:hidden">
+  <div className="mx-auto flex max-w-6xl items-center gap-3">
+    <div className="min-w-0 flex-1">
+      <p className="text-xs text-[#7A6A5D]">Total do atendimento</p>
+
+      <p className="break-words text-base font-semibold text-[#2E2723] [overflow-wrap:anywhere]">
+        {formatCurrency(totalAmount)}
+      </p>
+
+      <p className="text-xs text-[#7A6A5D]">
+        Saldo: {formatCurrency(balanceAmount)}
+      </p>
+    </div>
+
+    <button
+      type="submit"
+      disabled={saving}
+      className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-[#7D3F46] px-5 text-sm font-medium text-white shadow-sm transition hover:bg-[#6B343B] disabled:cursor-not-allowed disabled:opacity-70"
+    >
+      {saving ? "Salvando..." : "Criar"}
+    </button>
+  </div>
+</div>
         </form>
       </section>
     </main>
