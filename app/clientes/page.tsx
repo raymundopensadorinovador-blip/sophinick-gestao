@@ -159,25 +159,28 @@ const [loading, setLoading] = useState(true);
       return;
     }
   
-    const { error: insertError } = await supabase.from("customers").insert({
+    const { data: createdCustomer, error: insertError } = await supabase
+    .from("customers")
+    .insert({
       user_id: userId,
       name: draft.name.trim(),
       phone: draft.phone.trim() || null,
       email: draft.email.trim() || null,
       address: draft.address.trim() || null,
       notes: draft.notes.trim() || null,
-    });
+    })
+    .select("id")
+    .single();
   
-    if (insertError) {
-      setError("Não foi possível cadastrar a cliente.");
-      setSaving(false);
-      return;
-    }
-  
-    setDraft(emptyDraft);
-    await loadCustomers(userId);
-    setMessage("Cliente cadastrada com sucesso.");
+  if (insertError || !createdCustomer) {
+    setError("Não foi possível cadastrar a cliente.");
     setSaving(false);
+    return;
+  }
+  
+  setMessage("Cliente cadastrada. Abrindo novo atendimento...");
+  
+  router.push(`/pedidos/novo?cliente=${createdCustomer.id}`);  
   } 
   function startEditCustomer(customer: Customer) {
     setError("");
@@ -482,13 +485,20 @@ const [loading, setLoading] = useState(true);
                       </div>
 
                       <div className="flex shrink-0 flex-col gap-2 sm:items-end">
-                      <button
-  type="button"
-  onClick={() => startEditCustomer(customer)}
-  className="inline-flex min-h-10 items-center justify-center rounded-full border border-[#D8C7B1] bg-white px-4 text-xs font-medium text-[#7A4A4F] transition hover:bg-[#F4EADF]"
->
-  Editar
-</button>
+  <a
+    href={`/pedidos/novo?cliente=${customer.id}`}
+    className="inline-flex min-h-10 items-center justify-center rounded-full bg-[#7D3F46] px-4 text-xs font-medium text-white shadow-sm transition hover:bg-[#6B343B]"
+  >
+    Novo atendimento
+  </a>
+
+  <button
+    type="button"
+    onClick={() => startEditCustomer(customer)}
+    className="inline-flex min-h-10 items-center justify-center rounded-full border border-[#D8C7B1] bg-white px-4 text-xs font-medium text-[#7A4A4F] transition hover:bg-[#F4EADF]"
+  >
+    Editar
+  </button>
                        {customer.phone ? (
                           <a
                             href={whatsappLink(customer.phone)}

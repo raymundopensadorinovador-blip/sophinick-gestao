@@ -123,7 +123,7 @@ function getSuggestedDueDate(days: number | null) {
 
 export default function NovoPedidoPage() {
   const router = useRouter();
-
+  
   const [userId, setUserId] = useState("");
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [services, setServices] = useState<ServiceItem[]>([]);
@@ -161,12 +161,22 @@ export default function NovoPedidoPage() {
 
       setUserId(data.user.id);
 
-      await Promise.all([
-        loadCustomers(data.user.id),
-        loadServices(data.user.id),
-      ]);
+await Promise.all([
+  loadCustomers(data.user.id),
+  loadServices(data.user.id),
+]);
 
-      setLoading(false);
+const params = new URLSearchParams(window.location.search);
+const customerFromUrl = params.get("cliente");
+
+if (customerFromUrl) {
+  setOrderDraft((current) => ({
+    ...current,
+    customer_id: customerFromUrl,
+  }));
+}
+
+setLoading(false);
     }
 
     loadPage();
